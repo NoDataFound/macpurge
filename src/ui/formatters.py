@@ -39,16 +39,16 @@ def human_size(size_bytes: int) -> str:
 def display_scan_summary(result: ScanResult) -> None:
     """Display a summary table of scan results by category."""
     table = Table(
-        title="[bold cyan]Scan Summary by Category[/bold cyan]",
-        border_style="magenta",
-        header_style="bold purple",
+        title="[bold #00D9FF]Scan Summary by Category[/bold #00D9FF]",
+        border_style="#FF10F0",
+        header_style="bold #7928CA",
         show_lines=True,
     )
     
-    table.add_column("Category", style="cyan")
-    table.add_column("Items", justify="right", style="electric_blue")
-    table.add_column("Size", justify="right", style="magenta")
-    table.add_column("% of Total", justify="right", style="purple")
+    table.add_column("Category", style="#00D9FF")
+    table.add_column("Items", justify="right", style="#00F0FF")
+    table.add_column("Size", justify="right", style="#FF10F0")
+    table.add_column("% of Total", justify="right", style="#7928CA")
     
     category_sizes = result.category_sizes()
     category_counts = result.by_category()
@@ -81,7 +81,7 @@ def display_scan_summary(result: ScanResult) -> None:
             (str(len(result.targets)), f"bold {SYNTHWAVE_COLORS['magenta']}"),
             (" items", "white"),
         ),
-        border_style="cyan",
+        border_style="#00D9FF",
     )
     console.print(total_panel)
 
@@ -89,15 +89,15 @@ def display_scan_summary(result: ScanResult) -> None:
 def display_detailed_results(result: ScanResult, limit: int = 20) -> None:
     """Display detailed list of cleanup targets."""
     table = Table(
-        title="[bold cyan]Top Cleanup Targets[/bold cyan]",
-        border_style="magenta",
-        header_style="bold purple",
+        title="[bold #00D9FF]Top Cleanup Targets[/bold #00D9FF]",
+        border_style="#FF10F0",
+        header_style="bold #7928CA",
     )
     
     table.add_column("#", style="dim", width=4)
-    table.add_column("Path", style="path", max_width=50)
-    table.add_column("Category", style="category")
-    table.add_column("Size", justify="right", style="size")
+    table.add_column("Path", style="#00D9FF", max_width=50)
+    table.add_column("Category", style="#7928CA")
+    table.add_column("Size", justify="right", style="#FF10F0")
     table.add_column("Safe", justify="center")
     
     for i, target in enumerate(result.targets[:limit], 1):
@@ -106,9 +106,9 @@ def display_detailed_results(result: ScanResult, limit: int = 20) -> None:
             path_display = "..." + path_display[-47:]
         
         safe_indicator = (
-            f"[{SYNTHWAVE_COLORS['cyan']}]\u2713[/]"
+            f"[#00D9FF]\u2713[/#00D9FF]"
             if target.safe_to_delete and not target.requires_confirmation
-            else f"[{SYNTHWAVE_COLORS['neon_yellow']}]\u26a0[/]"
+            else f"[#F7FF00]\u26a0[/#F7FF00]"
         )
         
         table.add_row(
@@ -130,14 +130,14 @@ def display_cleanup_summary(progress: CleanupProgress, dry_run: bool = False) ->
     console.print()
     
     if dry_run:
-        title = "[bold neon_yellow]Dry Run Summary[/bold neon_yellow]"
+        title = "[bold #F7FF00]Dry Run Summary[/bold #F7FF00]"
     else:
-        title = "[bold cyan]Cleanup Complete[/bold cyan]"
+        title = "[bold #00D9FF]Cleanup Complete[/bold #00D9FF]"
     
-    table = Table(title=title, border_style="magenta")
+    table = Table(title=title, border_style="#FF10F0")
     
-    table.add_column("Metric", style="purple")
-    table.add_column("Value", justify="right", style="cyan")
+    table.add_column("Metric", style="#7928CA")
+    table.add_column("Value", justify="right", style="#00D9FF")
     
     table.add_row("Items Processed", str(progress.processed_items))
     table.add_row("Space Freed", human_size(progress.deleted_bytes))
@@ -157,7 +157,7 @@ def display_cleanup_summary(progress: CleanupProgress, dry_run: bool = False) ->
 
 def display_category_selection_menu(result: ScanResult) -> None:
     """Display interactive category selection menu."""
-    console.print("\n[bold cyan]Available Categories:[/bold cyan]\n")
+    console.print("\n[bold #00D9FF]Available Categories:[/bold #00D9FF]\n")
     
     category_sizes = result.category_sizes()
     category_counts = result.by_category()
@@ -169,9 +169,9 @@ def display_category_selection_menu(result: ScanResult) -> None:
         label = CATEGORY_LABELS.get(category, category.value)
         
         console.print(
-            f"  [{SYNTHWAVE_COLORS['cyan']}]{i:2}[/] "
-            f"[{SYNTHWAVE_COLORS['purple']}]{label:25}[/] "
-            f"[{SYNTHWAVE_COLORS['magenta']}]{human_size(size):>12}[/] "
+            f"  [#00D9FF]{i:2}[/#00D9FF] "
+            f"[#7928CA]{label:25}[/#7928CA] "
+            f"[#FF10F0]{human_size(size):>12}[/#FF10F0] "
             f"[dim]({count} items)[/dim]"
         )
     
